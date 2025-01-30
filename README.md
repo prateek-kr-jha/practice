@@ -5,6 +5,6 @@
 
 -----
 
-npm create vite@latest courseinfo -- --template react
+npm create vite@latest \<project\> -- --template react
 
 -  it is forbidden in React to mutate state directly
