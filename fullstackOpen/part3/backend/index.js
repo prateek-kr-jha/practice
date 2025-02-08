@@ -1,4 +1,5 @@
-const http = require('http');
+const express = require('express');
+const app = express();
 
 let notes = [
     {
@@ -16,12 +17,27 @@ let notes = [
       content: "GET and POST are the most important methods of HTTP protocol",
       important: true
     }
-  ]
-  const app = http.createServer((request, response) => {
-    response.writeHead(200, { 'Content-Type': 'application/json' })
-    response.end(JSON.stringify(notes))
-  })
+]
+
+app.get('/', (req, resp) => {
+    resp.send('<h1>Hello world</h1>')
+})
+
+app.get('/api/notes/:id', (req, resp) => {
+    const id = req.params.id;
+    const note = notes.find(note => note.id == id);
+    if(note) {
+        resp.json(note);
+    } else {
+        resp.status(404);
+        resp.send('no such note').end();
+    }
+})
+
+app.delete('/api/notes/:id', )
+
 const PORT = 3001;
 
-app.listen(PORT);
-console.log(`Server running on port ${PORT}`);
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
