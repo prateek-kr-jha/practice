@@ -5,15 +5,21 @@
   "scripts": {
     "start": "node index.js ---watch index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf dist && cd ../../part2/notes/ && npm run build && cp -r dist ../../part2/notes/",
+    "deploy": "fly deploy",
+    "deploy:full": "npm run build:ui && npm run deploy",    
+    "logs:prod": "fly logs"
   },
   "author": "Prateek Kumar Jha",
   "license": "MIT",
   "description": "",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.2"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.7.8",
     "nodemon": "^3.1.9"
   }
 }

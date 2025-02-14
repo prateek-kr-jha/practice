@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
 const requestLogger = (request, response, next) => {
     console.log("Method:", request.method);
@@ -28,15 +29,26 @@ let notes = [
       id: "3",
       content: "GET and POST are the most important methods of HTTP protocol",
       important: true
-    }
+    },
+    {
+        id: "4",
+        content: "GET ortant methods of HTTP protocol",
+        important: true
+      }
 ]
 
-
 app.use(express.json());
+app.use(cors());
+app.use(express.static('dist'));
 app.use(requestLogger);
 
 app.get('/', (req, resp) => {
-    resp.send('<h1>Hello world</h1>')
+    return resp.send(notes)
+})
+
+app.get('/api/notes', (req, res) => {
+    console.log("hi");
+    res.status(200).send(notes);
 })
 
 app.get('/api/notes/:id', (req, resp) => {
@@ -86,7 +98,7 @@ app.post("/api/notes", (req, resp) => {
 
 app.use(unknownEndpoint);
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
