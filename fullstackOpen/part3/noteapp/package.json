@@ -8,15 +8,19 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf dist && cd ../../part2/notes/ && npm run build && cp -r dist ../../part2/notes/",
     "deploy": "fly deploy",
-    "deploy:full": "npm run build:ui && npm run deploy",    
-    "logs:prod": "fly logs"
+    "deploy:full": "npm run build:ui && npm run deploy",
+    "logs:prod": "fly logs",
+    "debug": "nodemon --inspect index.js"
   },
   "author": "Prateek Kumar Jha",
   "license": "MIT",
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.2"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongodb": "^6.13.0",
+    "mongoose": "^8.10.1"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.7.8",
