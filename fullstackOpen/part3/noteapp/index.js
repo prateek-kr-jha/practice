@@ -1,24 +1,31 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const mongoose = require('mongoose');p
+const Note = require('./models/note');
+// const mongoose = require('mongoose');
 
 
-const password = encodeURIComponent(process.argv[2]);
+// const url = process.env.MONGODB_URI;
 
-const url =
-  `mongodb+srv://fullstack:${password}@cluster0.2psjv.mongodb.net/noteApp?retryWrites=true&w=majority&appName=Cluster0`
+// mongoose.set('strictQuery',false)
 
-mongoose.set('strictQuery',false)
+// mongoose.connect(url)
 
-mongoose.connect(url)
+// const noteSchema = new mongoose.Schema({
+//   content: String,
+//   important: Boolean,
+// })
 
-const noteSchema = new mongoose.Schema({
-  content: String,
-  important: Boolean,
-})
+// noteSchema.set('toJSON', {
+//     transform: (document, returnObject) => {
+//         returnObject.id = returnObject._id.toString();
+//         delete returnObject._id;
+//         delete returnObject.__v;
+//     }
+// })
 
-const Note = mongoose.model('Note', noteSchema)
+// const Note = mongoose.model('Note', noteSchema);
 
 
 const requestLogger = (request, response, next) => {
@@ -66,8 +73,10 @@ app.get('/', (req, resp) => {
 })
 
 app.get('/api/notes', (req, res) => {
-    console.log("hi");
-    res.status(200).send(notes);
+    Note.find({}).then(notes => {
+        console.log(notes);
+        res.status(200).send(notes);
+    })
 })
 
 app.get('/api/notes/:id', (req, resp) => {

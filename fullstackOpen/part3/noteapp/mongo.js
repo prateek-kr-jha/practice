@@ -6,7 +6,7 @@ if (process.argv.length<3) {
 }
 
 const password = encodeURIComponent(process.argv[2]);
-
+console.log(password)
 const url =
   `mongodb+srv://fullstack:${password}@cluster0.2psjv.mongodb.net/noteApp?retryWrites=true&w=majority&appName=Cluster0`
 
