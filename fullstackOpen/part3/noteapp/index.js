@@ -3,30 +3,6 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const Note = require('./models/note');
-// const mongoose = require('mongoose');
-
-
-// const url = process.env.MONGODB_URI;
-
-// mongoose.set('strictQuery',false)
-
-// mongoose.connect(url)
-
-// const noteSchema = new mongoose.Schema({
-//   content: String,
-//   important: Boolean,
-// })
-
-// noteSchema.set('toJSON', {
-//     transform: (document, returnObject) => {
-//         returnObject.id = returnObject._id.toString();
-//         delete returnObject._id;
-//         delete returnObject.__v;
-//     }
-// })
-
-// const Note = mongoose.model('Note', noteSchema);
-
 
 const requestLogger = (request, response, next) => {
     console.log("Method:", request.method);
@@ -39,6 +15,16 @@ const requestLogger = (request, response, next) => {
 const unknownEndpoint = (request, response) => {
     response.status(404).send({error: "unknown endpoint"});
 }
+
+const errorHandler = (error, request, response, next) => {
+    console.error(error.message)
+  
+    if (error.name === 'CastError') {
+      return response.status(400).send({ error: 'malformatted id' })
+    } 
+  
+    next(error)
+  }
 
 let notes = [
     {
@@ -79,15 +65,21 @@ app.get('/api/notes', (req, res) => {
     })
 })
 
-app.get('/api/notes/:id', (req, resp) => {
+app.get('/api/notes/:id', (req, resp, next) => {
     const id = req.params.id;
-    const note = notes.find(note => note.id == id);
-    if(note) {
-        resp.json(note);
-    } else {
-        resp.status(404);
-        resp.send('no such note').end();
-    }
+
+    Note.findById(id).then(note => {
+        if(note) {
+            resp.json(note);
+        } else {
+            resp.status(404);
+            resp.send('no such note').end();
+        }
+    })
+    .catch(err => {
+        next(err);
+    })
+
 })
 
 app.delete('/api/notes/:id', (req, res) => {
@@ -125,7 +117,7 @@ app.post("/api/notes", (req, resp) => {
 })
 
 app.use(unknownEndpoint);
-
+app.use(errorHandler);
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
