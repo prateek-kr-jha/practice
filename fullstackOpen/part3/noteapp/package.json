@@ -10,7 +10,8 @@
     "deploy": "fly deploy",
     "deploy:full": "npm run build:ui && npm run deploy",
     "logs:prod": "fly logs",
-    "debug": "nodemon --inspect index.js"
+    "debug": "nodemon --inspect index.js",
+    "lint": "eslint ."
   },
   "author": "Prateek Kumar Jha",
   "license": "MIT",
@@ -23,7 +24,11 @@
     "mongoose": "^8.10.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.20.0",
     "@flydotio/dockerfile": "^0.7.8",
+    "@stylistic/eslint-plugin-js": "^4.0.1",
+    "eslint": "^9.20.1",
+    "globals": "^16.0.0",
     "nodemon": "^3.1.9"
   }
 }
