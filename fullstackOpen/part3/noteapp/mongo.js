@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');p
 
 if (process.argv.length<3) {
-  console.log('give password as argument')
-  process.exit(1)
+    console.log('give password as argument')
+    process.exit(1)
 }
 
 const password = encodeURIComponent(process.argv[2]);
@@ -15,8 +15,8 @@ mongoose.set('strictQuery',false)
 mongoose.connect(url)
 
 const noteSchema = new mongoose.Schema({
-  content: String,
-  important: Boolean,
+    content: String,
+    important: Boolean,
 })
 
 const Note = mongoose.model('Note', noteSchema)
