@@ -17,14 +17,14 @@ beforeEach(async () => {
 
 const api = supertest(app);
 
-test.only('notes are returned as json', async () => {
+test('notes are returned as json', async () => {
     await api
         .get('/api/notes')
         .expect(200)
         .expect('Content-Type', /application\/json/)
 })
 
-test.only('there are two notes', async () => {
+test('there are two notes', async () => {
     const response = await api.get('/api/notes')
 
     assert.strictEqual(response.body.length, helper.initialNotes.length)
@@ -49,14 +49,14 @@ test('a valid note can be added ', async () => {
         .expect(201)
         .expect('Content-Type', /application\/json/)
 
-    const assertAtEnd = await helper.notesInDb();
+    const notesAtEnd = await helper.notesInDb();
+    assert.strictEqual(notesAtEnd.length,helper.initialNotes.length + 1)
 
-    assert.strictEqual(response.body.length,helper.initialNotes.length + 1)
-
+    const contents = notesAtEnd.map(n => n.content);
     assert(contents.includes('async/await simplifies making async calls'))
 })
 
-test('note without content is not added', async () => {
+test.only('note without content is not added', async () => {
     const newNote = {
         important: true
     }
@@ -66,12 +66,11 @@ test('note without content is not added', async () => {
         .send(newNote)
         .expect(400)
 
-    const response = await api.get('/api/notes')
-
-    assert.strictEqual(response.body.length, initialNotes.length)
+    const notesAtEnd = await helper.notesInDb();
+    assert.strictEqual(notesAtEnd.length, helper.initialNotes.length)
 })
 
 
 after(async () => {
-    await mongoose.connection.close()
+    await mongoose.connection.close();
 })
