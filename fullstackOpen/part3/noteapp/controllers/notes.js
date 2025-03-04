@@ -7,11 +7,15 @@ notesRouter.get('/', async (req, resp, next) => {
 });
 
 notesRouter.get('/:id', async(req, resp, next) => {
-    const note = await Note.findById(req.params.id);
-    if(note) {
-        resp.json(note);
-    } else {
-        resp.status(404).end();
+    try {
+        const note = await Note.findById(req.params.id);
+        if(note) {
+            resp.json(note);
+        } else {
+            resp.status(404).end();
+        }
+    } catch(e) {
+        resp.status(400).send({ error: 'malformatted id' });
     }
 })
 
