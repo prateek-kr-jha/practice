@@ -15,7 +15,7 @@ notesRouter.get('/:id', async(req, resp, next) => {
             resp.status(404).end();
         }
     } catch(e) {
-        resp.status(400).send({ error: 'malformatted id' });
+        resp.status(400).send({ error: 'malformed id' });
     }
 })
 
