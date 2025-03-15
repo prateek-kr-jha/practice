@@ -88,4 +88,60 @@ def remove_suffix_ness(word):
     return x
 
 
-print(remove_suffix_ness("heaviness"))
+def value_of_card(card):
+    """Determine the scoring value of a card.
+
+    :param card: str - given card.
+    :return: int - value of a given card.  See below for values.
+
+    1.  'J', 'Q', or 'K' (otherwise known as "face cards") = 10
+    2.  'A' (ace card) = 1
+    3.  '2' - '10' = numerical value.
+    """
+
+    if card in ['J', 'Q', 'K']:
+        return 10
+    elif card == "A": 
+        return 1
+    else:
+        return int(card)
+
+def is_blackjack(card_one, card_two):
+    """Determine if the hand is a 'natural' or 'blackjack'.
+
+    :param card_one, card_two: str - card dealt. See below for values.
+    :return: bool - is the hand is a blackjack (two cards worth 21).
+
+    1.  'J', 'Q', or 'K' (otherwise known as "face cards") = 10
+    2.  'A' (ace card) = 11 (if already in hand)
+    3.  '2' - '10' = numerical value.
+    """
+    hand = [value_of_card(card_one), value_of_card(card_two)]
+    return True if 1 in hand and 10 in hand  else False
+
+
+
+
+def is_armstrong_number(number):
+    
+    number_of_digits = len(str(number))
+    sum = 0
+    for digit in str(number):
+        sum += int(digit) ** number_of_digits
+    print(sum, number)
+    return sum == number
+
+
+def average_even_is_average_odd(hand):
+    """Return if the (average of even indexed card values) == (average of odd indexed card values).
+
+    :param hand: list - cards in hand.
+    :return: bool - are even and odd averages equal?
+    """
+    odd = hand[::2]
+    even = hand[1::2]
+    print(odd)
+    print(even)
+    # return card_average(hand) in [sum()]
+
+print(average_even_is_average_odd([1, 2, 3, 4, 5, 6]))
