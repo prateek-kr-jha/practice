@@ -123,13 +123,10 @@ def is_blackjack(card_one, card_two):
 
 
 def is_armstrong_number(number):
+    number_string = str(number)
+    number_of_digits = len(number_string)
     
-    number_of_digits = len(str(number))
-    sum = 0
-    for digit in str(number):
-        sum += int(digit) ** number_of_digits
-    print(sum, number)
-    return sum == number
+    return sum(int(digit) ** number_of_digits for digit in number_string) == number
 
 
 def average_even_is_average_odd(hand):
@@ -144,4 +141,4 @@ def average_even_is_average_odd(hand):
     print(even)
     # return card_average(hand) in [sum()]
 
-print(average_even_is_average_odd([1, 2, 3, 4, 5, 6]))
+print(is_armstrong_number(154))
