@@ -70,7 +70,7 @@ const App = () => {
     noteService
       .create(noteObject)
       .then(returnedNote => {
-        console.log(resp, "------------------");
+        console.log(returnedNote, "------------------");
         setNotes(notes.concat(returnedNote));
         setNewNote('');
       })
@@ -110,6 +110,8 @@ const App = () => {
       const user = await loginService.login({
         username, password
       })
+
+      noteService.setToken(user.token)
       setUser(user);
       setUsername('')
       setPassword('');
