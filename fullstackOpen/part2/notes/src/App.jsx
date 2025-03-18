@@ -35,7 +35,9 @@ const App = () => {
     'a new note....'
   );
   const [showAll, setShowAll] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('some error happened....');
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState(''); 
 
   const hook = () => {
     console.log('effect');
@@ -97,10 +99,34 @@ const App = () => {
       setNotes(notes.filter(n => n.id != id));
     })
   }
+
+  const handleLoogin = (event) => {
+    event.preventDefault();
+    console.log('logging in with', username, password)l
+  }
   return (
     <div>
       <h1>Notes</h1>
       <Notification message={errorMessage} />
+      <form>
+        <div>
+          username
+          <input
+          type="text"
+          value={username}
+          onChange={({ target }) => setUsername(target.value)}  
+          />
+        </div>
+        <div>
+          password
+          <input
+          type="password"
+          value={password}
+          onChange={({ target }) => setPassword(target.value)}  
+          />
+        </div>
+        <button type="submit">login</button>
+      </form>
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all'}
