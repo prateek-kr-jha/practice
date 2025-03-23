@@ -35,11 +35,7 @@ const Footer = () => {
 
 
 const App = () => {
-  const [loginVisible, setLoginVisible] = useState(false)
   const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState(
-    'a new note....'
-  );
   const [showAll, setShowAll] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [username, setUsername] = useState('');
@@ -60,6 +56,7 @@ const App = () => {
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser');
+    console.log(JSON.parse(loggedUserJSON), "---------")
     if(loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user)
@@ -71,27 +68,15 @@ const App = () => {
     ? notes 
     : notes.filter(note => note.important)
 
-  const addNote = (event) => {
-    event.preventDefault();
-    console.log('button clicked', event.target);
-    const noteObject = {
-      content: newNote,
-      important: Math.random() < 0.5
-    }
-
+  const addNote = (noteObject) => {
     noteService
       .create(noteObject)
       .then(returnedNote => {
         console.log(returnedNote, "------------------");
         setNotes(notes.concat(returnedNote));
-        setNewNote('');
       })
   }
 
-  const handleNoteChange = (event) => {
-    console.log(event.target.value);
-    setNewNote(event.target.value);
-  }
 
   const toggleImportanceOf = (id) => {
     console.log('importance of ' + id + ' needs to be toggled');
@@ -124,10 +109,12 @@ const App = () => {
       })
 
       noteService.setToken(user.token)
+      window.localStorage.setItem('loggedNoteappUser', JSON.stringify(user))
       setUser(user);
       setUsername('')
       setPassword('');
     } catch(e) {
+      console.log(e)
       setErrorMessage('Wrong credentials');
       setTimeout(() => {
         setErrorMessage(null)
@@ -136,25 +123,6 @@ const App = () => {
   }
 
   const loginForm = () => {
-    // const hideWhenVisible = { display: loginVisible ? 'none' : '' }
-    // const showWhenVisible = { display: loginVisible ? '' : 'none' }
-
-    // return (
-    //   <div>
-    //     <div style={hideWhenVisible}>
-    //       <button onClick={() => setLoginVisible(true)}>log in</button>
-    //     </div>
-    //     <div style={showWhenVisible}>
-    //       <LoginForm 
-    //         username={username}
-    //         password={password}
-    //         handleUsernameChange={({ target }) => setUsername(target.value)}
-    //         handlePasswordChange={({ target }) => setPassword(target.value)}
-    //         handleSubmit={handleLogin}
-    //       />
-    //     </div>
-    //   </div>
-    // )
 
     return (
       <Togglable buttonLabel='login'>
@@ -173,9 +141,7 @@ const App = () => {
   const noteForm = () => (
       <Togglable buttonLabel="New Note">
         <NoteForm
-          onSubmit={addNote}
-          value={newNote}
-          handleChange={handleNoteChange}
+          createNote={addNote}
         />
       </Togglable>
   )
