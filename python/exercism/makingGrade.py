@@ -1,5 +1,4 @@
-from curses.ascii import isalpha
-from multiprocessing.dummy import Value
+
 def count_failed_students(student_scores):
     """Count the number of failing students out of the group provided.
 
@@ -59,4 +58,79 @@ def classify(number):
     return "deficient"
 
 
-print(classify(8))
+# def to_rna(dna_strand):
+    # map = {
+    #     "A": "U",
+    #     "C": "G",
+    #     "T": "A",
+    #     "G": "C"
+    # }
+    # return "".join([map[char] for char in dna_strand])
+
+LOOKUP = str.maketrans("GCTA", "CGAU")
+print(LOOKUP)
+
+def to_rna(dna_strand):
+    return dna_strand.translate(LOOKUP)
+
+
+
+LOOKUP = {
+    "black": 0,
+    "brown": 1,
+    "red": 2,
+    "orange": 3,
+    "yellow": 4,
+    "green": 5,
+    "blue": 6,
+    "violet": 7,
+    "grey": 8,
+    "white": 9
+}
+def color_code(color):
+    return LOOKUP.index(color)
+
+
+def colors():
+    return LOOKUP
+
+
+def classify(number):
+    """ A perfect number equals the sum of its positive divisors.
+
+    :param number: int a positive integer
+    :return: str the classification of the input integer
+    """
+    if number < 1:
+        raise ValueError("Classification is only possible for positive integers.")
+    # factors = [num for num in range (1, number) if number % num == 0]
+    factors = {1}
+    for num in range(2, int(number ** 0.5) + 1):
+        if number % num == 0:
+            factors.add(num)
+            if number // num != num:
+                factors.add(number // num)
+    aliquot_sum = sum(factors)
+
+    return "deficient" if aliquot_sum < number else "perfect" if aliquot_sum == number else "abundant"
+
+LOOKUP = {
+    "black": 0,
+    "brown": 1,
+    "red": 2,
+    "orange": 3,
+    "yellow": 4,
+    "green": 5,
+    "blue": 6,
+    "violet": 7,
+    "grey": 8,
+    "white": 9
+}
+
+
+def label(colors):
+    resistor_value = (LOOKUP[colors[0]] * 10 + LOOKUP[colors[1]]) * 10 ** LOOKUP[colors[2]]
+
+    return f"{resistor_value if resistor_value < 1000 else resistor_value // 1000} {"ohms" if resistor_value < 1000 else "kiloohms"}"
+
+print(label(["red", "black", "red"]))
