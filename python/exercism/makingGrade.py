@@ -128,6 +128,7 @@ LOOKUP = {
 }
 
 
+
 def label(colors):
     resistor_value = (LOOKUP[colors[0]] * 10 + LOOKUP[colors[1]]) * 10 ** LOOKUP[colors[2]]
 
