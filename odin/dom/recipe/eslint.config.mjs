@@ -1,25 +1,25 @@
-import { defineConfig } from "eslint/config";
-import globals from "globals";
-import js from "@eslint/js";
-import eslintConfigPrettier from "eslint-config-prettier/flat";
+import { defineConfig } from 'eslint/config';
+import globals from 'globals';
+import js from '@eslint/js';
+import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
 export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs}"] },
-  { files: ["**/*.js"], languageOptions: { sourceType: "script" } },
+  { files: ['**/*.{js,mjs,cjs}'] },
+  { files: ['**/*.js'], languageOptions: { sourceType: 'script' } },
   {
-    files: ["**/*.{js,mjs,cjs}"],
+    files: ['**/*.{js,mjs,cjs}'],
     languageOptions: { globals: globals.browser },
   },
   {
-    files: ["**/*.{js,mjs,cjs}"],
+    files: ['**/*.{js,mjs,cjs}'],
     plugins: { js },
-    extends: ["js/recommended"],
+    extends: ['js/recommended'],
   },
   {
     rules: {
-      "no-unused-vars": "warn",
-      "no-undef": "warn",
-      indent: "error",
+      'no-unused-vars': 'warn',
+      'no-undef': 'warn',
+      indent: 'error',
     },
   },
   eslintConfigPrettier,
