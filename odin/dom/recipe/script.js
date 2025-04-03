@@ -8,8 +8,9 @@ const createMenuUI = () => {
   const heading = document.createElement('h2');
   heading.textContent = 'Menu';
   div.appendChild(heading);
+  div.appendChild(document.createElement('hr'));
   const menuList = document.createElement('ul');
-  
+
   RECIPES.forEach(recipe => {
     const li = document.createElement('li');
     const a = document.createElement('a');
