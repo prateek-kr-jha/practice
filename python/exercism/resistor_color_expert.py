@@ -1,4 +1,4 @@
-VALUE_LOOKUP = {
+LOOKUP = {
     "black": 0,
     "brown": 1,
     "red": 2,
@@ -11,13 +11,27 @@ VALUE_LOOKUP = {
     "white": 9
 }
 
-TOLERANCE_LOOKUP = {
-    "grey" : 0.05,
-    "violet" : 0.1,
-    "blue" : 0.25,
-    "green" : 0.5,
-    "brown" : 1,
-    "red" : 2,
-    "gold" : 5,
-    "silver" : 10,
+PREFIX_LOOKUP = {
+    3: "kiloohms",
+    6: "megaohms",
+    9: "gigaohms",
 }
+
+
+def label(colors):
+    if len(colors) < 3:
+        raise ValueError("At least three colors are required")
+
+    resistor_value = (LOOKUP[colors[0]] * 10 + LOOKUP[colors[1]]) * (10 ** LOOKUP[colors[2]])
+
+    for exponent in sorted(PREFIX_LOOKUP.keys(), reverse=True):
+        factor = 10 ** exponent
+        if resistor_value >= factor:
+            value = resistor_value / factor
+            value_str = f"{value:.1f}".rstrip("0").rstrip(".")
+            return f"{value_str} {PREFIX_LOOKUP[exponent]}"
+    
+    return f"{resistor_value} ohms"
+
+
+print(label(["red", "orange", "yellow"]))
