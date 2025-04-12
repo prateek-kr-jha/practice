@@ -1,0 +1,10 @@
+http://localhost:8080/hello
+
+
+###
+http://localhost:8080/odd-even
+content-type: application/json
+
+{
+    "number": 8
+}
