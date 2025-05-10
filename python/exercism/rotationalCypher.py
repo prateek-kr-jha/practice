@@ -32,4 +32,13 @@ def rotateAscii(text, key):
 
     return result
 
-print(rotateAscii("Let's eat, Grandma!", 21))
+# str.translate approach
+AlPHABET = "abcdefghijklmnopqrstuvwxyz"
+
+def rotateStrTranslate(text, key):
+    translator = AlPHABET[key:] + AlPHABET[:key]
+    return text.translate(str.maketrans(AlPHABET + AlPHABET.upper(), translator + translator.upper()))
+
+# recursion approach
+
+print(rotateStrTranslate("Let's eat, Grandma!", 21))
