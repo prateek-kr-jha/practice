@@ -36,7 +36,11 @@ def rotateAscii(text, key):
 AlPHABET = "abcdefghijklmnopqrstuvwxyz"
 
 def rotateStrTranslate(text, key):
+    # shift alphabets according to key
     translator = AlPHABET[key:] + AlPHABET[:key]
+    print(translator)
+    print(str.maketrans(AlPHABET + AlPHABET.upper(), translator + translator.upper()))
+    
     return text.translate(str.maketrans(AlPHABET + AlPHABET.upper(), translator + translator.upper()))
 
 # recursion approach
