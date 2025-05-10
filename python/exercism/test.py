@@ -1,6 +1,8 @@
 import string
-ENCODING = str.maketrans(string.ascii_lowercase, string.ascii_lowercase[::-1])
+# ENCODING = str.maketrans("hello", "abcde")
+x = string.ascii_lowercase + string.ascii_uppercase
 
-print(ENCODING)
+# print(ENCODING)
+print(x)
 
-help(str)
+# help(str)
