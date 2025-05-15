@@ -21,10 +21,12 @@ TOLERANCE_LOOKUP = {
     "gold" : 5,
     "silver" : 10,
 }
+def formatted_val(val):
+    return int(val) if int(val) == val else val
 
 def resistor_label(colors):
     if len(colors) < 4:
-        raise ValueError("At least three colors are required")
+        return f"{LOOKUP[colors[0]]} ohms"
     tolerance = None
     resistor_value = None
     if len(colors) == 5:
@@ -38,11 +40,11 @@ def resistor_label(colors):
     if resistor_value < 1000:
         value_string = f"{resistor_value} ohms"
     elif resistor_value < 1_000_000:
-        value_string = f"{resistor_value / 1_000 + resistor_value % 1_000} kiloohms"
+        value_string = f"{formatted_val(resistor_value / 1_000)} kiloohms"
     elif resistor_value < 1_000_000_000:
-        value_string = f"{resistor_value / 1_000_000 + resistor_value % 1_000_000} megaohms"
+        value_string = f"{formatted_val(resistor_value / 1_000_000)} megaohms"
     else:
-        value_string = f"{resistor_value / 1_000_000_000} gigaohms"
+        value_string = f"{formatted_val(resistor_value / 1_000_000_000)} gigaohms"
     return value_string + (f" ±{TOLERANCE_LOOKUP[tolerance]}%" if tolerance else "")
 
 
