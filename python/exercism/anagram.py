@@ -1,3 +1,6 @@
+import string as string
+import random
+
 def find_anagrams(word, candidates):
     return [
         candidate
