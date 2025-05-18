@@ -1,4 +1,4 @@
-from string import ascii_uppercase 
+from string import ascii_uppercase, digits
 import random
 
 
@@ -10,7 +10,7 @@ class Robot:
     __used_names = set()
     def __generate_name(self):
         while True:
-            name = f"""{random.choice(ascii_uppercase)}{random.choice(ascii_uppercase)}{random.randint(0, 999):03d}"""
+            name = "".join(random.choices(ascii_uppercase, k=2)+ random.choices(digits, k=3))
             if name not in self.__used_names:
                 self.__used_names.add(name)
                 return name
@@ -37,7 +37,7 @@ test2 = Robot()
 
 print(test.name)
 test.reset()
-print(test.name)
+print(test2.name)
 
 
 

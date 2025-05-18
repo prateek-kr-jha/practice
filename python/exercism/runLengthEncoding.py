@@ -4,3 +4,7 @@ def decode(string):
 
 def encode(string):
     pass
+
+
+print(encode("AABBBCCDAA"))
+print(decode("2A3B4C2A"))
