@@ -139,7 +139,7 @@ function Gameboard() {
     };
   }
   
-  const game = GameController();
-  game.playRound(0);
-  game.playRound(3);
-  game.playRound(1);
+const game = GameController();
+game.playRound(0);
+game.playRound(3);
+game.playRound(1);
