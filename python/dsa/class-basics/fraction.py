@@ -1,6 +1,13 @@
 class Fraction:
 
     def __init__(self, num, den):
+        if not isinstance(num, int) or not isinstance(den, int):
+            raise Exception("Both inputs must be int")
+        
+        if den < 0:
+            den = den * -1
+            num = num * -1
+        
         common = self.gcd(num, den)
         self.num = num // common
         self.den = den // common
@@ -74,7 +81,7 @@ class Fraction:
 
 
 
-myf = Fraction(3, 4)
+myf = Fraction(1, -4)
 myf2 = Fraction(6, 8)
 
-print(myf2 != myf)
+print(myf)
