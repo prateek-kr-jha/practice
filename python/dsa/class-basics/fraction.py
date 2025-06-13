@@ -1,8 +1,9 @@
 class Fraction:
 
     def __init__(self, num, den):
-        self.num = num
-        self.den = den
+        common = self.gcd(num, den)
+        self.num = num // common
+        self.den = den // common
     
 
     def __str__(self):
@@ -13,9 +14,9 @@ class Fraction:
     def __add__(self, otherFraction):
         newNum = self.num * otherFraction.den + self.den * otherFraction.num
         newDen = self.den * otherFraction.den
-        common = self.gcd(newNum, newDen)
+        # common = self.gcd(newNum, newDen)
 
-        return Fraction(newNum // common, newDen // common)
+        return Fraction(newNum, newDen)
 
     def gcd(self, m, n):
         while m % n != 0:
@@ -26,13 +27,54 @@ class Fraction:
             n = oldm % oldn
 
         return n
+    
+    def lcm(self, m, n):
+        return m * n // self.gcd(m, n)
 
     def __eq__(self, otherFraction):
         return self.num * otherFraction.den == otherFraction.num * self.den
 
+    def getNum(self):
+        return self.num
+
+    def getDen(self):
+        return self.den
+
+    def __sub__(self, otherFraction):
+        newNum = self.num * otherFraction.den - self.den * otherFraction.num
+        newDen = self.den * otherFraction.den
+
+        return Fraction(newNum, newDen)
+
+    def __mul__(self, otherFraction):
+        newNum = self.num * otherFraction.num
+        newDen = self.den * otherFraction.den
+
+        return Fraction(newNum, newDen)
+
+    def __truediv__(self, otherFraction):
+        newNum = self.num * otherFraction.den
+        newDen = self.den * otherFraction.num
+        return newNum / newDen
+
+    def __gt__(self, otherFraction):
+        return self.num * otherFraction.den > self.den * otherFraction.num
+
+    def __ge__(self, otherFraction):
+        return self.num * otherFraction.den >= self.den * otherFraction.num
+
+    def __lt__(self, otherFraction):
+        return self.num * otherFraction.den < self.den * otherFraction.num
+
+    def __le__(self, otherFraction):
+        return self.num * otherFraction.den <= self.den * otherFraction.num
+    
+    def __ne__(self, otherFraction):
+        return self.num * otherFraction.den != self.den * otherFraction.num
+
+
+
 myf = Fraction(3, 4)
-myf2 = Fraction(1, 2)
+myf2 = Fraction(6, 8)
 
-
-print(myf + myf2)
-print(myf == myf2)
+print(myf2 != myf)
