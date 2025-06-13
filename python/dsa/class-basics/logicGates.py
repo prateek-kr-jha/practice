@@ -8,7 +8,7 @@ class LogicGate:
         return self.label
 
     def get_output(self):
-        self.output = self.performGateLogic()
+        self.output = self.perform_gate_logic()
         return self.output
 
 class BinaryGate(LogicGate):
@@ -21,12 +21,12 @@ class BinaryGate(LogicGate):
 
     def get_pin_a(self):
         if self.pin_a == None:
-            return int(input("Enter Pin A input for gate "+ self.getLabel()+"--> "))
+            return int(input("Enter Pin A input for gate "+ self.get_label()+"--> "))
         return self.pin_a.get_from().get_output()
     
     def get_pin_b(self):
         if self.pin_b == None:
-            return int(input("Enter Pin A input for gate "+ self.getLabel()+"--> "))
+            return int(input("Enter Pin B input for gate "+ self.get_label()+"--> "))
         return self.pin_b.get_from().get_output()
 
     def set_next_pin(self, source):
@@ -47,7 +47,7 @@ class UnaryGate(LogicGate):
     
     def get_pin(self):
         if self.pin == None:
-            return int(input("Enter Pin input for gate "+ self.getLabel()+"--> "))
+            return int(input("Enter Pin input for gate "+ self.get_label()+"--> "))
         return self.pin.get_from().get_output()
 
     def set_next_pin(self, source):
@@ -107,12 +107,49 @@ class Connector:
     def get_to(self):
         return self.to_gate
 
+class NorGate(OrGate):
+
+    def perform_gate_logic(self):
+        return 1 if super.perform_gate_logic() == 0 else 0
+
+class NandGate(AndGate):
+
+    def perform_gate_logic(self):
+        return 1 if super.perform_gate_logic() == 0 else 0
 
 
-g1 = AndGate("G1")
-g2 = OrGate("G2")
-g3 = NotGate("G3")
+def main():
+    g1 = AndGate("G1")
+    g2 = AndGate("G2")
+    g3 = OrGate("G3")
+    g4 = NotGate("G4")
+    c1 = Connector(g1, g3)
+    c1 = Connector(g2, g3)
+    c3 = Connector(g3, g4)
+
+    print(g4.get_output())
+
+# main()
+
+def morgan():
+    g1 = AndGate("G1")
+    g2 = AndGate("G2")
+    g3 = OrGate("G3")
+    g7 = NotGate("G7")
+    c1 = Connector(g1, g3)
+    c2 = Connector(g2, g3)
+    g4 = NotGate("G4")
+    g5 = NotGate("G5")
+    g6 = AndGate("G6")
+    c3 = Connector(g1, g4)
+    c4 = Connector(g2, g5)
+    c5 = Connector(g4, g6)
+    c6 = Connector(g5, g6)
+    c7 = Connector(g3, g7)
+    print(g7.get_output())
+    print(g6.get_output())
+
+morgan()
 
 
-print(g3.get_output())
 
