@@ -79,6 +79,9 @@ class Fraction:
     def __ne__(self, otherFraction):
         return self.num * otherFraction.den != self.den * otherFraction.num
 
+    def __radd__(self, other):
+        return self.value + other
+
 
 
 myf = Fraction(1, -4)
