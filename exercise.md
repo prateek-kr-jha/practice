@@ -241,4 +241,30 @@
 **Ready to take action. Stay consistent. Adjust monthly. Progress will come.**
 
 ---
+upper body:
+- back
+- shoulders
+- chest
+- core
+- arms:
+  - forearms
+  - wrist
+  - biceps
+  - triceps
 
+lower body:
+- legs:
+  - thighs
+  - calves
+  - ankle
+- glutes
+
+
+days: 
+m: chest + back + core + basic full body
+t: shoulders + core + arms + basic full body
+w: basic full body + legs + shoulders
+t: back + chest + arms + basic full + legs
+f: rest
+sa: full body
+su: full body
