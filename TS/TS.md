@@ -75,8 +75,7 @@ class Person {
 const p = new Person("Alice", 30);
 p.greet(); // Hi, I am Alice, 30 years old
 ```
-// TODO
-// FIXME
+
 ### 5. Inheritance (extends) & super:
 You can make a class extend another class (your TodoItem extends TreeItem)
 
@@ -101,6 +100,73 @@ const d = new Dog("Tommy", "Beagle");
 d.speak(); // Tommy barks
 
 ```
-```mermaid
-TS -> Etension -> Then Estension
+
+
+- Three basic types: number, string, boolean
+- when impossibel to know the type use "Any"
+- Array: 
+```TS
+  let list: number[] = [1, 2, 3]
+  // generic array
+  let list: Array<number> = [1, 2, 3]
+```
+- for enumerations:
+```TS
+enum Color { Red, Green, Blue }
+let c: Color: Color.Green
+```
+
+- void is used in case function doesn't return anything
+- functions are 1st class citizen, support lambda syntax and support type inference
+
+```TS
+// all are same
+let f1 = function (i: number): number { return i * i; }
+// type inferred
+let f2 = function (i: number) { return i * i; }
+
+let f3 = (i: number): number => { return i * i; }
+// type inferred
+let f4 = (i: number) => { return i * i; }
+
+let f5 = (i: number) => i * i;
+
+function f6(i: string | number): void {
+  console.log("The value was " + i);
+}
+```
+
+- interfaces are structural, anything that has the properties is compliant with the interfaces
+```TS
+interface Person {
+  name: string;
+
+  // optional properties
+  age?: number;
+
+  move(): void
+}
+
+// Object that implements the "Person" interface
+// Can be treated as a Person since it has the name and move properties
+let p: Person = { name: "Bobby", move: () => { } };
+// Objects that have the optional property:
+let validPerson: Person = { name: "Bobby", age: 42, move: () => { } };
+// Is not a person because age is not a number
+let invalidPerson: Person = { name: "Bobby", age: true };
+
+// Interfaces can also describe a function type
+interface SearchFunc {
+  (source: string, subString: string): boolean;
+}
+// Only the parameters' types are important, names are not important.
+let mySearch: SearchFunc;
+mySearch = function (src: string, sub: string) {
+  return src.search(sub) != -1;
+}
+```
+
+- classes - members are public by default
+```TS
+
 ```
